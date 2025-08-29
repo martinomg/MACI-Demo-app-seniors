@@ -6,6 +6,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { GoogleGenAI } from "@google/genai";
+import { createProfile, updateProfileWithRawResults, createOportunidades, Oportunidad } from "./directus";
 
 interface JobOpportunity {
   title: string;
@@ -34,8 +35,16 @@ const App = () => {
     setOpportunities([]);
     setGroundingChunks([]);
 
+    let profileId: string | null = null;
+
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      // 1. Create profile in Directus
+      profileId = await createProfile(userInput);
+      if (!profileId) {
+        throw new Error("No se pudo crear el perfil en Directus.");
+      }
+
+      const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_API_KEY as string });
 
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
@@ -59,6 +68,10 @@ const App = () => {
           tools: [{ googleSearch: {} }],
         },
       });
+      
+      // 2. Update profile with raw results
+      await updateProfileWithRawResults(profileId, { raw_response: response.text });
+
 
       setGroundingChunks(
         response.candidates?.[0]?.groundingMetadata?.groundingChunks || []
@@ -79,6 +92,19 @@ const App = () => {
 
       if (Array.isArray(parsedResponse.opportunities)) {
           setOpportunities(parsedResponse.opportunities);
+          
+          // 3. Create structured opportunities in Directus
+          const opportunitiesToCreate: Omit<Oportunidad, 'perfil'>[] = parsedResponse.opportunities.map((job: JobOpportunity) => ({
+            titulo: job.title,
+            descripcion: job.review,
+            ubicacion: job.location,
+            perfil_requerido: job.skills.join(', '),
+            url: job.url,
+            horario: 'No especificado' // Default value or extract from job details if available
+          }));
+
+          await createOportunidades(profileId, opportunitiesToCreate);
+
       } else {
           throw new Error("El formato de las oportunidades laborales en la respuesta es incorrecto.");
       }
