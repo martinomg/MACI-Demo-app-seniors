@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { GoogleGenAI } from "@google/genai";
 import { createProfile, updateProfileWithRawResults, createOportunidades, Oportunidad } from "./directus";
+import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Textarea, Label } from "./components/ui";
 
 interface JobOpportunity {
   title: string;
@@ -126,10 +127,10 @@ const App = () => {
       </header>
 
       <div className="search-area" role="search">
-        <label htmlFor="user-prompt">
+        <Label htmlFor="user-prompt">
           Describe tus habilidades y tu ubicación
-        </label>
-        <textarea
+        </Label>
+        <Textarea
           id="user-prompt"
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
@@ -137,9 +138,9 @@ const App = () => {
           rows={4}
           aria-label="Describe tus habilidades y tu ubicación"
         />
-        <button onClick={findOpportunities} disabled={isLoading}>
+        <Button onClick={findOpportunities} disabled={isLoading}>
           {isLoading ? "Buscando..." : "Buscar Oportunidades"}
-        </button>
+        </Button>
       </div>
 
       {error && (
@@ -158,34 +159,33 @@ const App = () => {
       <section className="results-panel" aria-live="polite">
         {opportunities.length > 0 && <h2>Oportunidades para ti</h2>}
         {opportunities.map((job, index) => (
-          <article key={index} className="job-card">
-            <header>
-              <h3>{job.title}</h3>
-              <p className="company-location">
+          <Card key={index} className="job-card">
+            <CardHeader>
+              <CardTitle>{job.title}</CardTitle>
+              <CardDescription>
                 {job.company} - {job.location}
-              </p>
-            </header>
-            <div className="card-body">
-              <h4>¿Por qué es una buena oportunidad para ti?</h4>
-              <p>{job.review}</p>
-              <h4>Habilidades clave</h4>
-              <ul>
-                {(job.skills || []).map((skill, i) => (
-                  <li key={i}>{skill}</li>
-                ))}
-              </ul>
-            </div>
-            <footer>
-              <a
-                href={job.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="apply-button"
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div>
+                <h4 style={{ marginBottom: '0.5rem', fontSize: '1.125rem', fontWeight: '600' }}>¿Por qué es una buena oportunidad para ti?</h4>
+                <p style={{ marginBottom: '1rem' }}>{job.review}</p>
+                <h4 style={{ marginBottom: '0.5rem', fontSize: '1.125rem', fontWeight: '600' }}>Habilidades clave</h4>
+                <ul style={{ paddingLeft: '1.5rem', marginBottom: '1rem' }}>
+                  {(job.skills || []).map((skill, i) => (
+                    <li key={i}>{skill}</li>
+                  ))}
+                </ul>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button 
+                onClick={() => window.open(job.url, '_blank', 'noopener,noreferrer')}
               >
                 Ver Oferta
-              </a>
-            </footer>
-          </article>
+              </Button>
+            </CardFooter>
+          </Card>
         ))}
       </section>
       
