@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { GoogleGenAI } from "@google/genai";
 import { createProfile, updateProfileWithRawResults, createOportunidades, Oportunidad } from "./directus";
-import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Textarea, Label } from "./components/ui";
+import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Textarea, Label, Loader } from "./components/ui";
 
 interface JobOpportunity {
   title: string;
@@ -100,7 +100,7 @@ const App = () => {
             descripcion: job.review,
             ubicacion: job.location,
             perfil_requerido: job.skills.join(', '),
-            url: job.url,
+            link: job.url,
             horario: 'No especificado' // Default value or extract from job details if available
           }));
 
@@ -151,8 +151,11 @@ const App = () => {
 
       {isLoading && (
         <div className="loading-indicator">
-          <div className="spinner" aria-label="Cargando resultados"></div>
-          <p>Analizando tu perfil para encontrar las mejores opciones...</p>
+          <Loader 
+            variant="spinner" 
+            text="Analizando tu perfil para encontrar las mejores opciones..." 
+            size={48}
+          />
         </div>
       )}
 

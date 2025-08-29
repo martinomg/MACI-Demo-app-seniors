@@ -11,3 +11,6 @@ export type { LabelProps } from './label';
 
 export { Textarea } from './textarea';
 export type { TextareaProps } from './textarea';
+
+export { Loader } from './loader';
+export type { LoaderProps } from './loader';

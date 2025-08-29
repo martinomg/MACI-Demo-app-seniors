@@ -11,6 +11,9 @@ importers:
       '@google/genai':
         specifier: ^1.16.0
         version: 1.16.0
+      '@iconify/react':
+        specifier: ^6.0.0
+        version: 6.0.0(react@19.1.1)
       react:
         specifier: ^19.1.1
         version: 19.1.1
@@ -194,6 +197,14 @@ packages:
     peerDependenciesMeta:
       '@modelcontextprotocol/sdk':
         optional: true
+
+  '@iconify/react@6.0.0':
+    resolution: {integrity: sha512-eqNscABVZS8eCpZLU/L5F5UokMS9mnCf56iS1nM9YYHdH8ZxqZL9zyjSwW60IOQFsXZkilbBiv+1paMXBhSQnw==}
+    peerDependencies:
+      react: '>=16'
+
+  '@iconify/types@2.0.0':
+    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
 
   '@rollup/rollup-android-arm-eabi@4.49.0':
     resolution: {integrity: sha512-rlKIeL854Ed0e09QGYFlmDNbka6I3EQFw7iZuugQjMb11KMpJCLPFL4ZPbMfaEhLADEL1yx0oujGkBQ7+qW3eA==}
@@ -612,6 +623,13 @@ snapshots:
       - encoding
       - supports-color
       - utf-8-validate
+
+  '@iconify/react@6.0.0(react@19.1.1)':
+    dependencies:
+      '@iconify/types': 2.0.0
+      react: 19.1.1
+
+  '@iconify/types@2.0.0': {}
 
   '@rollup/rollup-android-arm-eabi@4.49.0':
     optional: true

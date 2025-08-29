@@ -37,54 +37,65 @@ body {
   font-family: var(--font-family);
   background-color: var(--background);
   color: var(--foreground);
-  line-height: 1.5;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   line-height: 1.2;
   margin-top: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 h1 {
   font-size: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 
 h2 {
   font-size: 2rem;
+  margin-bottom: 1.25rem;
+  margin-top: 2rem;
 }
 
 h3 {
   font-size: 1.75rem;
+  margin-bottom: 1rem;
 }
 
 h4 {
   font-size: 1.5rem;
+  margin-bottom: 0.875rem;
 }
 
 h5 {
   font-size: 1.25rem;
+  margin-bottom: 0.75rem;
 }
 
 h6 {
   font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 p {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.7;
 }
 
 a {
   color: var(--primary);
   text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 a:hover {
   text-decoration: underline;
+  opacity: 0.8;
 }
 
 button {
@@ -102,11 +113,113 @@ select {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 3rem 2rem;
+}
+
+section {
+  margin-bottom: 3rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.search-area {
+  background-color: var(--card);
+  padding: 2.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-area label {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--foreground);
+}
+
+.search-area textarea {
+  width: 100%;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  resize: vertical;
+  min-height: 120px;
+  background-color: var(--background);
+  transition: border-color 0.2s ease;
+}
+
+.search-area textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.search-area button {
+  padding: 0.75rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.search-area button:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.search-area button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.results-panel {
+  margin-top: 3rem;
+}
+
+.job-card {
+  margin-bottom: 2rem;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  gap: 1.5rem;
+}
+
+.error-container {
+  margin: 2rem 0;
 }
 
 @media (max-width: 768px) {
   .container {
-    padding: 1rem;
+    padding: 2rem 1rem;
+  }
+  
+  .search-area {
+    padding: 1.5rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
   }
 }
